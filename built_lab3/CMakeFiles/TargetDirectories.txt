@@ -1,0 +1,3 @@
+C:/Users/ASUS/Documents/GitHub/lab3/built_lab3/CMakeFiles/sfml_sample.dir
+C:/Users/ASUS/Documents/GitHub/lab3/built_lab3/CMakeFiles/ALL_BUILD.dir
+C:/Users/ASUS/Documents/GitHub/lab3/built_lab3/CMakeFiles/ZERO_CHECK.dir

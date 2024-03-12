@@ -1,23 +1,43 @@
 ﻿#include <SFML/Graphics.hpp>
+#include <random>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Shapes");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Moving Shapes Up and Right");
 
-    // Создание трех кругов разного размера, цвета и скорости
-    sf::CircleShape circle1(20);
-    circle1.setFillColor(sf::Color::Red);
-    circle1.setPosition(100, 100);
-    float speed1 = 0.5f;
+    sf::CircleShape circle(30);
+    circle.setFillColor(sf::Color::Red);
+    circle.setPosition(50, 600);
+    float speedX_circle = 0.0f;
+    float speedY_circle = -0.2f;
+    bool colorChanged_circle = false;
 
-    sf::CircleShape circle2(30);
-    circle2.setFillColor(sf::Color::Green);
-    circle2.setPosition(400, 300);
-    float speed2 = 0.5f;
+    sf::RectangleShape square(sf::Vector2f(60, 60));
+    square.setFillColor(sf::Color::Green);
+    square.setPosition(200, 600);
+    float speedX_square = 0.0f;
+    float speedY_square = -0.1f;
+    bool colorChanged_square = false;
 
-    sf::CircleShape circle3(15);
-    circle3.setFillColor(sf::Color::Blue);
-    circle3.setPosition(700, 200);
-    float speed3 = 0.5f;
+    sf::ConvexShape triangle;
+    triangle.setPointCount(3);
+    triangle.setPoint(0, sf::Vector2f(0, 0));
+    triangle.setPoint(1, sf::Vector2f(30, 0));
+    triangle.setPoint(2, sf::Vector2f(15, 30));
+    triangle.setFillColor(sf::Color::Blue);
+    triangle.setPosition(350, 600);
+    float speedX_triangle = 0.0f;
+    float speedY_triangle = -0.3f;
+    bool colorChanged_triangle = false;
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 255);
+
+    sf::Clock clock;
+    sf::Time elapsedTime = clock.getElapsedTime();
+    while (elapsedTime.asSeconds() < 2) {
+        elapsedTime = clock.getElapsedTime();
+    }
 
     while (window.isOpen()) {
         sf::Event event;
@@ -27,38 +47,54 @@ int main() {
             }
         }
 
-        // Движение каждого круга
-        circle1.move(speed1, speed1);
-        circle2.move(speed2, speed2);
-        circle3.move(speed3, speed3);
+        circle.move(speedX_circle, speedY_circle);
+        square.move(speedX_square, speedY_square);
+        triangle.move(speedX_triangle, speedY_triangle);
 
-        // Отражение от границ экрана
-        if (circle1.getPosition().x <= 0 || circle1.getPosition().x + circle1.getRadius() * 2 >= 800) {
-            speed1 = -speed1;
+        // Reflect logic here
+
+        if (circle.getPosition().y <= 0) {
+            if (!colorChanged_circle) {
+                circle.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
+                colorChanged_circle = true;
+            }
+            speedY_circle = 0;
+            speedX_circle = 0.1f;
         }
-        if (circle1.getPosition().y <= 0 || circle1.getPosition().y + circle1.getRadius() * 2 >= 600) {
-            speed1 = -speed1;
+        if (square.getPosition().y <= 0) {
+            if (!colorChanged_square) {
+                square.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
+                colorChanged_square = true;
+            }
+            speedY_square = 0;
+            speedX_square = 0.2f;
+        }
+        if (triangle.getPosition().y <= 0) {
+            if (!colorChanged_triangle) {
+                triangle.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
+                colorChanged_triangle = true;
+            }
+            speedY_triangle = 0;
+            speedX_triangle = 0.3f;
         }
 
-        if (circle2.getPosition().x <= 0 || circle2.getPosition().x + circle2.getRadius() * 2 >= 800) {
-            speed2 = -speed2;
+        if (circle.getPosition().x + circle.getRadius() * 2 >= 800) {
+            speedX_circle = 0;
+            speedY_circle = 0;
         }
-        if (circle2.getPosition().y <= 0 || circle2.getPosition().y + circle2.getRadius() * 2 >= 600) {
-            speed2 = -speed2;
+        if (square.getPosition().x + square.getSize().x >= 800) {
+            speedX_square = 0;
+            speedY_square = 0;
+        }
+        if (triangle.getPosition().x + 30 >= 800) {
+            speedX_triangle = 0;
+            speedY_triangle = 0;
         }
 
-        if (circle3.getPosition().x <= 0 || circle3.getPosition().x + circle3.getRadius() * 2 >= 800) {
-            speed3 = -speed3;
-        }
-        if (circle3.getPosition().y <= 0 || circle3.getPosition().y + circle3.getRadius() * 2 >= 600) {
-            speed3 = -speed3;
-        }
-
-        // Отрисовка кругов на экране
         window.clear();
-        window.draw(circle1);
-        window.draw(circle2);
-        window.draw(circle3);
+        window.draw(circle);
+        window.draw(square);
+        window.draw(triangle);
         window.display();
     }
 

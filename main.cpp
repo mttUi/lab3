@@ -51,7 +51,6 @@ int main() {
         square.move(speedX_square, speedY_square);
         triangle.move(speedX_triangle, speedY_triangle);
 
-        // Reflect logic here
 
         if (circle.getPosition().y <= 0) {
             if (!colorChanged_circle) {

@@ -1,0 +1,10 @@
+^C:\USERS\ASUS\DOCUMENTS\GITHUB\SFML_SAMPLE\BUILD_SAMPLE\CMAKEFILES\DF08F5F3E67E058E10317A39AEF06E3B\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ASUS/Documents/GitHub/sfml_sample -BC:/Users/ASUS/Documents/GitHub/sfml_sample/build_sample --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/ASUS/Documents/GitHub/sfml_sample/build_sample/sfml_sample.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,4 +1,6 @@
+build
+out
+.cache
 .idea
-cmake-build-debug
-*.vsidx
-*.opendb
+.vs
+.vscode

@@ -55,14 +55,16 @@ int main() {
             speedX_circle = -speedX_circle;
             hitCount_circle++;
             circle.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
-            float newX_circle = std::max(circle.getRadius(), std::min(800 - 2 * circle.getRadius(), circle.getPosition().x));
-            circle.setPosition(sf::Vector2f(newX_circle, std::max(circle.getRadius(), std::min(600 - 2 * circle.getRadius(), circle.getPosition().y))));
+            float newX_circle = std::max(0.0f, std::min(800.0f - 2 * circle.getRadius(), circle.getPosition().x));
+            float newY_circle = std::max(0.0f, std::min(600.0f - 2 * circle.getRadius(), circle.getPosition().y));
+            circle.setPosition(sf::Vector2f(newX_circle, newY_circle));
         }
+
         if (circlePos.y <= 0 || circlePos.y + circle.getRadius() * 2 >= 600) {
             speedY_circle = -speedY_circle;
             hitCount_circle++;
             circle.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
-            float newY_circle = std::max(circle.getRadius(), std::min(600 - 2 * circle.getRadius(), circle.getPosition().y));
+            float newY_circle = std::max(0.0f, std::min(600.0f - 2 * circle.getRadius(), circle.getPosition().y));
             circle.setPosition(sf::Vector2f(circle.getPosition().x, newY_circle));
         }
 
